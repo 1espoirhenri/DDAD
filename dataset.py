@@ -33,17 +33,17 @@ class Dataset_maker(torch.utils.data.Dataset):
         if is_train:
             if category:
                 self.image_files = glob(
-                    os.path.join(root, category, "train", "*", "*.png")
+                    os.path.join(root, category, "train", "*", "*.jpg")
                 )
             else:
                 self.image_files = glob(
-                    os.path.join(root, "train", "*", "*.png")
+                    os.path.join(root, "train", "*", "*.jpg")
                 )
         else:
             if category:
-                self.image_files = glob(os.path.join(root, category, "test", "*", "*.png"))
+                self.image_files = glob(os.path.join(root, category, "test", "*", "*.jpg"))
             else:
-                self.image_files = glob(os.path.join(root, "test", "*", "*.png"))
+                self.image_files = glob(os.path.join(root, "test", "*", "*.jpg"))
         self.is_train = is_train
 
     def __getitem__(self, index):
@@ -64,7 +64,7 @@ class Dataset_maker(torch.utils.data.Dataset):
                     if self.config.data.name == 'MVTec':
                         target = Image.open(
                             image_file.replace("/test/", "/ground_truth/").replace(
-                                ".png", "_mask.png"
+                                ".png", "_mask.jpg"
                             )
                         )
                     else:
