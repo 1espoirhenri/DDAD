@@ -55,6 +55,7 @@ def finetuning(config):
 
 
 def parse_args():
+    config_dir = '/kaggle/input/dataset-ours/Dataset/bi_dao'
     cmdline_parser = argparse.ArgumentParser('DDAD')    
     cmdline_parser.add_argument('-cfg', '--config', 
                                 default= os.path.join(os.path.dirname(os.path.abspath(__file__)),'config.yaml'), 
