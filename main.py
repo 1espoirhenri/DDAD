@@ -36,7 +36,24 @@ def detection(config):
     unet = torch.nn.DataParallel(unet)
     unet.load_state_dict(checkpoint)    
     unet.to(config.model.device)
-    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    #-----------thay đổi chỗ này
+    # Nếu checkpoint có prefix "module.", loại bỏ prefix
+    if "module." in list(checkpoint.keys())[0]:
+        checkpoint = {key.replace("module.", ""): value for key, value in checkpoint.items()}
+    
+    # Gói mô hình bằng DataParallel
+    unet = torch.nn.DataParallel(unet)
+    #-----------kết thúc thay đổi----------------------------
+
+    
+    # Load state_dict với checkpoint
+    try:
+        unet.load_state_dict(checkpoint)
+    except RuntimeError as e:
+        print(f"Error loading state_dict: {e}")
+        print("Trying to load with strict=False...")
+        unet.load_state_dict(checkpoint, strict=False)  # Bỏ qua mismatch keys
     unet.eval()
     ddad = DDAD(unet, config)
     ddad()
