@@ -80,7 +80,7 @@ def domain_adaptation(unet, config, fine_tune):
             os.getcwd(),
             config.model.checkpoint_dir,
             config.data.category,
-            f'feat{config.model.DA_chp}'  # Chuyển `config.model.DA_chp` thành chuỗi và thêm tiền tố nếu cần
+            config.model.DA_chp  # Chuyển `config.model.DA_chp` thành chuỗi và thêm tiền tố nếu cần
                 )
             )
 
