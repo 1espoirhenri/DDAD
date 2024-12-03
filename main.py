@@ -36,8 +36,8 @@ def detection(config):
     unet = torch.nn.DataParallel(unet)
     unet.load_state_dict(checkpoint)    
     unet.to(config.model.device)
-    # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp))) 
-    checkpoint = torch.load(checkpoint, weights_only=True)
+    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp))) 
+    # checkpoint = torch.load(checkpoint, weights_only=True)
     # Load state_dict với checkpoint
     try:
         unet.load_state_dict(checkpoint)
