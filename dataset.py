@@ -68,10 +68,10 @@ class Dataset_maker(torch.utils.data.Dataset):
                             )
                         )
                     else:
-                        target = Image.open(
-                            image_file.replace("/test/", "/ground_truth/"))
-                    target = self.mask_transform(target)
-                    label = 'defective'
+                        target_file = image_file.replace("/test/", "/ground_truth/").replace(".jpg", ".png") # sửa lại chỗ này thêm .png
+                        target = Image.open(target_file)
+                        target = self.mask_transform(target)
+                        label = 'defective'
             else:
                 if os.path.dirname(image_file).endswith("good"):
                     target = torch.zeros([1, image.shape[-2], image.shape[-1]])
