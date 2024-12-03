@@ -10,6 +10,19 @@ from reconstruction import *
 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0,1,2"
 
+# --------------thêm hàm này----------------
+# Kiểm tra nếu checkpoint cần điều chỉnh key
+def fix_checkpoint_keys(checkpoint):
+    new_state_dict = {}
+    for k, v in checkpoint.items():
+        if k.startswith("module."):
+            new_state_dict[k[len("module."):]] = v  # Loại bỏ "module." nếu có
+        else:
+            new_state_dict[k] = v
+    return new_state_dict
+# --------------thêm hàm này----------------
+
+
 def loss_fucntion(a, b, c, d, config):
     cos_loss = torch.nn.CosineSimilarity()
     loss1 = 0
@@ -108,6 +121,8 @@ def domain_adaptation(unet, config, fine_tune):
     
     else:
         # checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat{config.model.DA_chp}'))#{config.model.DA_chp}            
-        checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'{config.model.DA_chp}' ))#{config.model.DA_chp}            
+        checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'{config.model.DA_chp}' ))#{config.model.DA_chp} 
+        #thêm dòng này
+        checkpoint = fix_checkpoint_keys(checkpoint)  # Fix keys trước khi load
         feature_extractor.load_state_dict(checkpoint)  
     return feature_extractor
