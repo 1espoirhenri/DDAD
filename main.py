@@ -35,7 +35,18 @@ def detection(config):
     # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, f'{config.model.load_chp}'))
     unet = torch.nn.DataParallel(unet)
     # unet.load_state_dict(checkpoint)    
-    unet.load_state_dict(checkpoint, strict=False)
+    
+    #---------------thay đổi bắt đầu-------------------
+    from collections import OrderedDict
+    new_state_dict = OrderedDict()
+    for k, v in checkpoint.items():
+        name = k[7:] if k.startswith('module.') else k
+        new_state_dict[name] = v
+    
+    # Load state dict to model
+    unet.load_state_dict(new_state_dict, strict=False)
+    #---------------thay đổi kết thúc-----------------
+    
     unet.to(config.model.device)
     checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, f'{config.model.load_chp}')) 
     unet.eval()
