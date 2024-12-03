@@ -31,11 +31,13 @@ def train(config):
 
 def detection(config):
     unet = build_model(config)
-    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, f'feat{config.model.load_chp}'))
     unet = torch.nn.DataParallel(unet)
-    unet.load_state_dict(checkpoint)    
+    unet.load_state_dict(checkpoint, strict=False)    
     unet.to(config.model.device)
-    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, f'feat{config.model.load_chp}'))
     unet.eval()
     ddad = DDAD(unet, config)
     ddad()
@@ -43,15 +45,13 @@ def detection(config):
 
 def finetuning(config):
     unet = build_model(config)
-    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    # checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, str(config.model.load_chp)))
+    checkpoint = torch.load(os.path.join(os.getcwd(), config.model.checkpoint_dir, config.data.category, f'feat{config.model.load_chp}'))
     unet = torch.nn.DataParallel(unet)
     unet.load_state_dict(checkpoint)    
     unet.to(config.model.device)
     unet.eval()
     domain_adaptation(unet, config, fine_tune=True)
-
-
-
 
 
 def parse_args():
@@ -72,8 +72,6 @@ def parse_args():
     args, unknowns = cmdline_parser.parse_known_args()
     return args
 
-
-    
 if __name__ == "__main__":
     torch.cuda.empty_cache()
     args = parse_args()
