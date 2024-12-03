@@ -14,7 +14,7 @@ data :
 
 model:
   DDADS: False
-  checkpoint_dir: /kaggle/input/checkpoints-1500epoch-new/checkpoints/MVTec   #MTD  #MVTec  #VisA
+  checkpoint_dir: /kaggle/working/DDAD/checkpoints/MVTec   #MTD  #MVTec  #VisA
   checkpoint_name: weights
   exp_name: default
   feature_extractor: wide_resnet101_2 #wide_resnet101_2  # wide_resnet50_2 #resnet50
