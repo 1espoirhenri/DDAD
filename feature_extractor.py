@@ -80,7 +80,7 @@ def domain_adaptation(unet, config, fine_tune):
             os.getcwd(),
             config.model.checkpoint_dir,
             config.data.category,
-            'config.model.DA_chp'  # Chuyển `config.model.DA_chp` thành chuỗi và thêm tiền tố nếu cần
+            f'{config.model.DA_chp}'  # Chuyển `config.model.DA_chp` thành chuỗi và thêm tiền tố nếu cần
                 )
             )
 
@@ -111,10 +111,10 @@ def domain_adaptation(unet, config, fine_tune):
             print(f"Epoch {epoch+1} | Loss: {loss.item()}")
             # if (epoch+1) % 5 == 0:
             # torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat{epoch+1}'))
-            torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,config.model.DA_chp))
+            torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'{config.model.DA_chp}'))
     
     else:
         # checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat{config.model.DA_chp}'))#{config.model.DA_chp}            
-        checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,config.model.DA_chp))#{config.model.DA_chp}            
+        checkpoint = torch.load(os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'{config.model.DA_chp}' ))#{config.model.DA_chp}            
         feature_extractor.load_state_dict(checkpoint)  
     return feature_extractor
