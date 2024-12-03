@@ -74,7 +74,16 @@ def domain_adaptation(unet, config, fine_tune):
 
         optimizer = torch.optim.AdamW(feature_extractor.parameters(),lr= 1e-4)
         # torch.save(frozen_feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat0'))
-        torch.save(frozen_feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,config.model.DA_chp))
+        torch.save(
+        frozen_feature_extractor.state_dict(),
+        os.path.join(
+            os.getcwd(),
+            config.model.checkpoint_dir,
+            config.data.category,
+            f'feat{config.model.DA_chp}'  # Chuyển `config.model.DA_chp` thành chuỗi và thêm tiền tố nếu cần
+                )
+            )
+
         reconstruction = Reconstruction(unet, config)
         for epoch in range(config.model.DA_epochs):
             for step, batch in enumerate(trainloader):
