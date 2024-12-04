@@ -33,17 +33,17 @@ class Dataset_maker(torch.utils.data.Dataset):
         if is_train:
             if category:
                 self.image_files = glob(
-                    os.path.join(root, category, "train", "good", "*.png")
+                    os.path.join(root, category, "train", "good", "*.jpg")
                 )
             else:
                 self.image_files = glob(
-                    os.path.join(root, "train", "good", "*.png")
+                    os.path.join(root, "train", "good", "*.jpg")
                 )
         else:
             if category:
-                self.image_files = glob(os.path.join(root, category, "test", "*", "*.png"))
+                self.image_files = glob(os.path.join(root, category, "test", "*", "*.jpg"))
             else:
-                self.image_files = glob(os.path.join(root, "test", "*", "*.png"))
+                self.image_files = glob(os.path.join(root, "test", "*", "*.jpg"))
         self.is_train = is_train
 
     def __getitem__(self, index):
