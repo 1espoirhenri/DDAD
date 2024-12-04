@@ -64,7 +64,8 @@ class Dataset_maker(torch.utils.data.Dataset):
                 else:
                     # Đường dẫn cho ảnh defected
                     target_file = image_file.replace("/test/", "/ground_truth/").replace(".jpg", ".png")
-                    target = Image.open(target_file)
+                    # target = Image.open(target_file)
+                    target = Image.open(target_file).convert("L")  # Mask luôn là ảnh grayscale (1 channel)
                     target = self.mask_transform(target)
                     label = 'defective'
             else:
