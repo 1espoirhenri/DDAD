@@ -46,7 +46,7 @@ class Dataset_maker(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         image_file = self.image_files[index]
-        image = Image.open(image_file)
+        image = Image.open(image_file).convert("RGB") #thêm vào .convert("RGB")
         image = self.image_transform(image)
         if(image.shape[0] == 1):
             image = image.expand(3, self.config.data.image_size, self.config.data.image_size)
