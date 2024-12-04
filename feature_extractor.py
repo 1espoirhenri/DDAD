@@ -103,8 +103,8 @@ def domain_adaptation(unet, config, fine_tune):
 
             print(f"Epoch {epoch+1} | Loss: {loss.item()}")
             # if (epoch+1) % 5 == 0:
-            # torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat{epoch+1}'))
-            torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir),f'feat{epoch+1}'))
+            torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'feat{epoch+1}'))
+            
             # torch.save(feature_extractor.state_dict(), os.path.join(os.path.join(os.getcwd(), config.model.checkpoint_dir), config.data.category,f'{config.model.DA_chp}'))
     
     else:
