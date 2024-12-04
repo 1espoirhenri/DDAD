@@ -55,11 +55,11 @@ class DDAD:
                 gt = self.transform(gt)
 
                 forward_list.append(input)
-                # anomaly_map_list.append(anomaly_map)
-                #thêm cái này vo
-                if anomaly_map.shape[1] != 3:  # Đảm bảo anomaly_map có 3 channel
-                    anomaly_map = anomaly_map.expand(3, anomaly_map.shape[-2], anomaly_map.shape[-1])
                 anomaly_map_list.append(anomaly_map)
+                # #thêm cái này vo
+                # if anomaly_map.shape[1] != 3:  # Đảm bảo anomaly_map có 3 channel
+                #     anomaly_map = anomaly_map.expand(3, anomaly_map.shape[-2], anomaly_map.shape[-1])
+                # anomaly_map_list.append(anomaly_map)
 
 
 
